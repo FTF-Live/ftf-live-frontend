@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
+import CustomSelect from '@/components/ui/CustomSelect';
 
 const RestrictMemberModal = ({ isOpen, onClose, memberName = "Anna Lola", memberAvatar = "/images/girl.png", onRestrict }) => {
   const [reasonOption, setReasonOption] = useState("");
@@ -9,20 +10,20 @@ const RestrictMemberModal = ({ isOpen, onClose, memberName = "Anna Lola", member
 
   // Sample options
   const reasonOptions = [
-    "Spam/Trolling",
-    "Zorbalık ve Taciz",
-    "Nefret Söylemi",
-    "Uygunsuz İçerik",
-    "Diğer"
+    { value: "Spam/Trolling", label: "Spam/Trolling" },
+    { value: "Zorbalık ve Taciz", label: "Zorbalık ve Taciz" },
+    { value: "Nefret Söylemi", label: "Nefret Söylemi" },
+    { value: "Uygunsuz İçerik", label: "Uygunsuz İçerik" },
+    { value: "Diğer", label: "Diğer" }
   ];
 
   const durationOptions = [
-    "1 saat",
-    "1 gün",
-    "3 gün",
-    "7 gün",
-    "30 gün",
-    "Kalıcı"
+    { value: "1 saat", label: "1 saat" },
+    { value: "1 gün", label: "1 gün" },
+    { value: "3 gün", label: "3 gün" },
+    { value: "7 gün", label: "7 gün" },
+    { value: "30 gün", label: "30 gün" },
+    { value: "Kalıcı", label: "Kalıcı" }
   ];
 
   // Animation variants
@@ -137,21 +138,16 @@ const RestrictMemberModal = ({ isOpen, onClose, memberName = "Anna Lola", member
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <div className="relative">
-                    <select
-                      value={reasonOption}
-                      onChange={(e) => setReasonOption(e.target.value)}
-                      className="outline-none bg-[#27272A] text-[#9F9FA9] w-full p-3 rounded appearance-none pr-10 cursor-pointer text-sm"
-                    >
-                      <option value="" disabled>Şikayet nedeni seçiniz</option>
-                      {reasonOptions.map((option, index) => (
-                        <option key={index} value={option}>{option}</option>
-                      ))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <Icon icon="tabler:chevron-down" className="text-white" />
-                    </div>
-                  </div>
+                  <CustomSelect
+                    options={[
+                      { value: "", label: "Şikayet nedeni seçiniz", disabled: true },
+                      ...reasonOptions
+                    ]}
+                    value={reasonOption}
+                    onChange={(e) => setReasonOption(e.target.value)}
+                    placeholder="Şikayet nedeni seçiniz"
+                    icon="mdi:alert-circle-outline"
+                  />
                 </motion.div>
 
                 <motion.div
@@ -160,21 +156,16 @@ const RestrictMemberModal = ({ isOpen, onClose, memberName = "Anna Lola", member
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  <div className="relative">
-                    <select
-                      value={durationOption}
-                      onChange={(e) => setDurationOption(e.target.value)}
-                      className="outline-none bg-[#27272A] text-[#9F9FA9] w-full p-3 rounded appearance-none pr-10 cursor-pointer text-sm"
-                    >
-                      <option value="" disabled>Kısıtlama süresi seçiniz</option>
-                      {durationOptions.map((option, index) => (
-                        <option key={index} value={option}>{option}</option>
-                      ))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <Icon icon="tabler:chevron-down" className="text-white" />
-                    </div>
-                  </div>
+                  <CustomSelect
+                    options={[
+                      { value: "", label: "Kısıtlama süresi seçiniz", disabled: true },
+                      ...durationOptions
+                    ]}
+                    value={durationOption}
+                    onChange={(e) => setDurationOption(e.target.value)}
+                    placeholder="Kısıtlama süresi seçiniz"
+                    icon="mdi:timer-outline"
+                  />
                 </motion.div>
               </div>
 
